@@ -9,4 +9,10 @@ public interface PostService {
     PostDto createPost(PostDto postDto);
 
     Page<PostDto> getAll(Pageable pageable);
+
+    PostDto getOnePostById(Long id);
+
+    PostDto updateOneById(Long id, PostDto postDto);
+
+    void deleteOneById(Long id);
 }
