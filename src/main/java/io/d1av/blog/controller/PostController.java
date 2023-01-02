@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,16 +30,19 @@ public class PostController {
         return new ResponseEntity<>(service.getOnePostById(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostDto> createNewPost(@Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(service.createPost(postDto), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<PostDto> updateOnePost(@PathVariable Long id, @Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(service.updateOneById(id, postDto), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id) {
         service.deleteOneById(id);
