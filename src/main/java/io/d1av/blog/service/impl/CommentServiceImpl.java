@@ -45,30 +45,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto getCommentById(Long postId, Long commentId) {
-
-        Comment comment = checkPostAndCommentRelation(postId, commentId);
-
-        return new CommentDto(comment);
-    }
-
-    @Override
-    public CommentDto updateComment(Long postId, Long commentId, CommentDto commentDto) {
-
-        Comment comment = checkPostAndCommentRelation(postId, commentId);
-
-        comment.setBody(commentDto.getBody());
-        comment.setEmail(commentDto.getEmail());
-        comment.setName(commentDto.getName());
-        return new CommentDto(commentRepository.save(comment));
-    }
-
-    @Override
-    public void deleteComment(Long postId, Long commentId) {
-        checkPostAndCommentRelation(postId, commentId);
-        commentRepository.deleteById(commentId);
-    }
-
-    private Comment checkPostAndCommentRelation(Long postId, Long commentId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
         Comment comment = commentRepository.findById(commentId)
@@ -76,7 +52,23 @@ public class CommentServiceImpl implements CommentService {
         if (!comment.getPost().getId().equals(post.getId())) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Comment does not belong to post");
         }
-        return comment;
+        return new CommentDto(comment);
     }
+
+    @Override
+    public CommentDto updateComment(Long postId, Long commentId, CommentDto commentDto) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", postId));
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment", "id", postId));
+        if (!comment.getPost().getId().equals(post.getId())) {
+            throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Comment does not belong to post");
+        }
+        comment.setBody(commentDto.getBody());
+        comment.setEmail(commentDto.getEmail());
+        comment.setName(commentDto.getName());
+        return new CommentDto(commentRepository.save(comment));
+    }
+
 
 }
