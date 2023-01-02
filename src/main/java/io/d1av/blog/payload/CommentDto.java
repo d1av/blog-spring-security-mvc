@@ -1,11 +1,6 @@
 package io.d1av.blog.payload;
 
 import io.d1av.blog.entity.Comment;
-import io.d1av.blog.entity.Post;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 public class CommentDto {
     private Long id;
