@@ -1,30 +1,36 @@
-package io.d1av.blog.entity;
+package io.d1av.blog.payload;
 
-import jakarta.persistence.*;
+import io.d1av.blog.entity.Comment;
+import io.d1av.blog.entity.Post;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
-@Entity
-@Table(name = "comment")
-public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CommentDto {
     private Long id;
-    @Column(nullable = false)
     private String body;
     private String email;
     private String name;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id", nullable = false)
-    private Post postId;
+    private Long postId;
 
-    public Comment() {
+    public CommentDto() {
     }
 
-    public Comment(Long id, String body, String email, String name, Post postId) {
+    public CommentDto(Long id, String body, String email, String name, Long postId) {
         this.id = id;
         this.body = body;
         this.email = email;
         this.name = name;
         this.postId = postId;
+    }
+
+    public CommentDto(Comment entity) {
+        id = entity.getId();
+        body = entity.getBody();
+        email = entity.getEmail();
+        name = entity.getName();
+        postId = entity.getPost().getId();
     }
 
     public Long getId() {
@@ -59,11 +65,11 @@ public class Comment {
         this.name = name;
     }
 
-    public Post getPost() {
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPost(Post postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 }
