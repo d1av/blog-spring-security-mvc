@@ -2,6 +2,8 @@ package io.d1av.blog.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "posts", uniqueConstraints = @UniqueConstraint(columnNames = {"title"}))
 public class Post {
@@ -14,6 +16,8 @@ public class Post {
     private String description;
     @Column(name = "content", nullable = false)
     private String content;
+    @OneToMany(mappedBy = "postId")
+    private List<Comment> comments;
 
     public Post() {
     }
@@ -23,6 +27,14 @@ public class Post {
         this.title = title;
         this.description = description;
         this.content = content;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getTitle() {
