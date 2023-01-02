@@ -5,6 +5,8 @@ import io.d1av.blog.payload.PostDto;
 import io.d1av.blog.repository.PostRepository;
 import io.d1av.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,5 +22,11 @@ public class PostServiceImpl implements PostService {
         post.setDescription(postDto.getDescription());
         post.setContent(postDto.getContent());
         return new PostDto(repository.save(post));
+    }
+
+    @Override
+    public Page<PostDto> getAll(Pageable pageable) {
+        Page<Post> result = repository.findAll(pageable);
+        return result.map(PostDto::new);
     }
 }
