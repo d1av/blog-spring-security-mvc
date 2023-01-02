@@ -12,17 +12,15 @@ public class CommentDto {
     private String body;
     private String email;
     private String name;
-    private Long postId;
 
     public CommentDto() {
     }
 
-    public CommentDto(Long id, String body, String email, String name, Long postId) {
+    public CommentDto(Long id, String body, String email, String name) {
         this.id = id;
         this.body = body;
         this.email = email;
         this.name = name;
-        this.postId = postId;
     }
 
     public CommentDto(Comment entity) {
@@ -30,7 +28,6 @@ public class CommentDto {
         body = entity.getBody();
         email = entity.getEmail();
         name = entity.getName();
-        postId = entity.getPost().getId();
     }
 
     public Long getId() {
@@ -65,11 +62,4 @@ public class CommentDto {
         this.name = name;
     }
 
-    public Long getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
 }
