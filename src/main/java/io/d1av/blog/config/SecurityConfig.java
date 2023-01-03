@@ -1,6 +1,5 @@
 package io.d1av.blog.config;
 
-import io.d1av.blog.exception.CustomAccessDeniedHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,7 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 public class SecurityConfig {
@@ -27,10 +25,11 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(auth ->
-                        //auth.anyRequest().authenticated()
-                        auth.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                ).httpBasic(Customizer.withDefaults())
-                .exceptionHandling(x->x.accessDeniedHandler(accessDeniedHandler()));
+                        auth.anyRequest().authenticated()
+                       // auth.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                        //        .requestMatchers( "/h2/**").permitAll()
+                ).httpBasic(Customizer.withDefaults());
+        //   .exceptionHandling(x->x.accessDeniedHandler(accessDeniedHandler()));
 
         return http.build();
     }
@@ -51,10 +50,5 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(ramesh, admin);
     }
-
-
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
-    }
 }
+
