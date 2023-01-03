@@ -37,12 +37,13 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .headers(header->header.frameOptions().disable())
+                .headers(header -> header.frameOptions().disable())
                 .authorizeHttpRequests(auth ->
-                                auth.anyRequest().authenticated()
+                                auth.requestMatchers("/api/auth/**").permitAll()
+                                        .requestMatchers( "/h2/**").permitAll()
+                                        .anyRequest().authenticated()
                         // auth.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
-                        //        .requestMatchers( "/h2/**").permitAll()
-                ).httpBasic(Customizer.withDefaults());
+                );
         //   .exceptionHandling(x->x.accessDeniedHandler(accessDeniedHandler()));
 
         return http.build();

@@ -30,19 +30,19 @@ public class PostController {
         return new ResponseEntity<>(service.getOnePostById(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+   // @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<PostDto> createNewPost(@Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(service.createPost(postDto), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+  //  @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<PostDto> updateOnePost(@PathVariable Long id, @Valid @RequestBody PostDto postDto) {
         return new ResponseEntity<>(service.updateOneById(id, postDto), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+  //  @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id) {
         service.deleteOneById(id);
