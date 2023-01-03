@@ -53,7 +53,6 @@ public class SecurityConfig {
                         authorize.requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .anyRequest().authenticated()
-
                 ).exceptionHandling( exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint)
                 ).sessionManagement( session -> session

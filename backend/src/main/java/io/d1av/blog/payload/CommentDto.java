@@ -1,12 +1,11 @@
 package io.d1av.blog.payload;
 
-import lombok.Data;
-
+import io.d1av.blog.entity.Comment;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-@Data
+
 public class CommentDto {
     private long id;
     // name should not be null or empty
@@ -24,4 +23,53 @@ public class CommentDto {
     @NotEmpty
     @Size(min = 10, message = "Comment body must be minimum 10 characters")
     private String body;
+
+    public CommentDto() {
+    }
+
+    public CommentDto(long id, String name, String email, String body) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.body = body;
+    }
+
+    public CommentDto(Comment entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.email = entity.getEmail();
+        this.body = entity.getBody();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
 }
