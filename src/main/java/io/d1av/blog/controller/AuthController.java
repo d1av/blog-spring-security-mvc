@@ -1,5 +1,6 @@
 package io.d1av.blog.controller;
 
+import io.d1av.blog.payload.JWTAuthResponse;
 import io.d1av.blog.payload.LoginDto;
 import io.d1av.blog.payload.RegisterDto;
 import io.d1av.blog.service.AuthService;
@@ -21,9 +22,14 @@ public class AuthController {
 
     //Build login REST APU
     @PostMapping(value = {"/login", "/signin"})
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
-        String response = authService.login(loginDto);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDto loginDto) {
+        String token = authService.login(loginDto);
+
+        JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
+
+
+        return ResponseEntity.ok(jwtAuthResponse);
     }
 
     @PostMapping(value = {"/register", "/signup"})

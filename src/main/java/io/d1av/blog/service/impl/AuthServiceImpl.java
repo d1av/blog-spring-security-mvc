@@ -1,7 +1,6 @@
 package io.d1av.blog.service.impl;
 
 
-
 import io.d1av.blog.entity.Role;
 import io.d1av.blog.entity.User;
 import io.d1av.blog.exception.BlogAPIException;
@@ -9,6 +8,7 @@ import io.d1av.blog.payload.LoginDto;
 import io.d1av.blog.payload.RegisterDto;
 import io.d1av.blog.repository.RoleRepository;
 import io.d1av.blog.repository.UserRepository;
+import io.d1av.blog.security.JwtTokenProvider;
 import io.d1av.blog.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,12 +27,14 @@ public class AuthServiceImpl implements AuthService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
+    private JwtTokenProvider jwtTokenProvider;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -41,7 +43,8 @@ public class AuthServiceImpl implements AuthService {
                 loginDto.getUsernameOrEmail(), loginDto.getPassword()
         ));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "User Logged-in successfully!";
+
+        return jwtTokenProvider.generateToken(authentication);
     }
 
     @Override
