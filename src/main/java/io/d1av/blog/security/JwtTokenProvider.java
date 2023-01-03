@@ -1,7 +1,6 @@
 package io.d1av.blog.security;
 
 import io.d1av.blog.exception.BlogAPIException;
-import io.d1av.blog.payload.JWTAuthResponse;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -11,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.time.Instant;
 import java.util.Date;
 
 @Component
@@ -19,7 +17,7 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String jwtSecret;
     @Value("${jwt.duration}")
-    private String jwtExpirationDate;
+    private Long jwtExpirationDate;
 
     //generate JWT Token
     public String generateToken(Authentication authentication) {
