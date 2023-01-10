@@ -4,11 +4,17 @@ import io.d1av.blog.entity.Comment;
 import io.d1av.blog.entity.Post;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
+@Getter
+@Setter
 public class PostDto {
     private long id;
 
@@ -28,6 +34,8 @@ public class PostDto {
     @NotEmpty
     private String content;
     private Set<CommentDto> comments;
+
+    private Long categoryId;
 
     public PostDto() {
     }
