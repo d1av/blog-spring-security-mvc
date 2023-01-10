@@ -3,6 +3,8 @@ package io.d1av.blog.service;
 import io.d1av.blog.payload.PostDto;
 import io.d1av.blog.payload.PostResponse;
 
+import java.util.List;
+
 public interface PostService {
     PostDto createPost(PostDto postDto);
 
@@ -13,4 +15,6 @@ public interface PostService {
     PostDto updatePost(PostDto postDto, long id);
 
     void deletePostById(long id);
+
+    List<PostDto> getPostByCategory(Long categoryId);
 }
