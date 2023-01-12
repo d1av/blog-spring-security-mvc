@@ -15,6 +15,10 @@ and the security is based on roles, the user can also create comments, delete, u
 - MySQL
 - JPA
 
+# This project is LIVE!
+
+https://blog-app-mvc.herokuapp.com/swagger-ui/index.html
+
 # Blog Layers and Structure
 
 ![image](https://user-images.githubusercontent.com/107776531/212106182-14fa8e6b-5c43-46bf-9f77-efdbff0d67bc.png)
